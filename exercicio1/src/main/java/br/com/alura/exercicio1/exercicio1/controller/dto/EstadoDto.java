@@ -4,6 +4,8 @@ import br.com.alura.exercicio1.exercicio1.modelo.Estado;
 import br.com.alura.exercicio1.exercicio1.modelo.StatusEstado;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class EstadoDto {
 
@@ -21,6 +23,11 @@ public class EstadoDto {
         this.populacao = estado.getPopulacao();
         this.capital = estado.getCapital();
         this.area = estado.getArea();
+    }
+
+    public static List<EstadoDto> converter(List<Estado> estados) {
+        return estados.stream().map(EstadoDto::new).collect(Collectors.toList());
+        //Chama o construtor que recebe o próprio tópico como parâmetro e transformo numa lista
     }
 
     public Long getId() {

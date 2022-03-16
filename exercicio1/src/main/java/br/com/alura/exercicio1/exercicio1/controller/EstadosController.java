@@ -25,14 +25,13 @@ public class EstadosController {
     private EstadosRepository estadoRepository;
 
     @GetMapping // mesma url porem agora com metodo Get
-    public List<Estado> lista(StatusEstado regiao) {
-
+    public List<EstadoDto> lista(StatusEstado regiao) {
         if (regiao == null) {
             List<Estado> estados = estadoRepository.findAll();
-            return new ArrayList<>(estados);
+            return EstadoDto.converter(estados);
         } else {
             List<Estado> estados = estadoRepository.findByRegiao(regiao);
-            return new ArrayList<>(estados);
+            return EstadoDto.converter(estados);
         }
     }
     @PostMapping // mesma url porem agora com metodo Post
@@ -55,11 +54,11 @@ public class EstadosController {
     }
     @PutMapping("/{id}") // put sobrescreve / atualiza todas informações que ja estão escritas.
     @Transactional
-    public ResponseEntity<Estado> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoEstadoForm form ){
+    public ResponseEntity<EstadoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoEstadoForm form ){
         Optional<Estado> optional = estadoRepository.findById(id);
         if(optional.isPresent()){
             Estado estado = form.atualizar(id, estadoRepository);
-            return ResponseEntity.ok(estado);
+            return ResponseEntity.ok(new EstadoDto(estado));
         }
         return ResponseEntity.notFound().build();
     }

@@ -3,7 +3,6 @@ package br.com.alura.exercicio1.exercicio1.controller.form;
 import br.com.alura.exercicio1.exercicio1.modelo.Estado;
 import br.com.alura.exercicio1.exercicio1.modelo.StatusEstado;
 import br.com.alura.exercicio1.exercicio1.repository.EstadosRepository;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

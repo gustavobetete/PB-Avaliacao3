@@ -2,10 +2,8 @@ package br.com.alura.exercicio1.exercicio1.controller.dto;
 
 import br.com.alura.exercicio1.exercicio1.modelo.Estado;
 import br.com.alura.exercicio1.exercicio1.modelo.StatusEstado;
+import org.springframework.data.domain.Page;
 
-import javax.persistence.*;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class EstadoDto {
 
@@ -25,9 +23,8 @@ public class EstadoDto {
         this.area = estado.getArea();
     }
 
-    public static List<EstadoDto> converter(List<Estado> estados) {
-        return estados.stream().map(EstadoDto::new).collect(Collectors.toList());
-        //Chama o construtor que recebe o próprio tópico como parâmetro e transformo numa lista
+    public static Page<EstadoDto> converter(Page<Estado> estados) {
+        return estados.map(EstadoDto::new);
     }
 
     public Long getId() {

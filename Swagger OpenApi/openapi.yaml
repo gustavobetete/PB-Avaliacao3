@@ -1,0 +1,146 @@
+openapi: 3.0.1
+
+info: 
+  title: API Spring Boot Avaliação 
+  description: Api referente ao exercicio 01 da avaliação da Compass UOL.
+  version: 0.0.1
+  #Contatos
+  contact:
+    name: Gustavo Betete
+    email: gustavo.castiglio.pb@compasso.com.br
+    url: https://www.linkedin.com/in/gustavo-betete-castiglioni-2643771b2/
+servers: 
+ - url: http://localhost:8080
+   description: API Spring Boot Exercicio
+paths:
+  /api/states:
+    post:
+      summary: Criar novos estados
+      description: "Através desse endpoint você pode criar novos estados com suas devidas caracteristicas"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:   
+                  type: string
+                regiao:   
+                  type: string
+                populacao:   
+                  type: integer
+                capital:   
+                  type: string
+                area:   
+                  type: number  
+      responses:
+        201:
+          description: "Sucesso"
+          content:
+           application/json:
+            schema:
+              $ref: "#/components/schemas/Estado"
+            
+    get: 
+      summary: Recupera todos os estados 
+      description: "Atravez desse endpoint voce pode trazer todos os estados ja setados"
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Estados"
+
+            
+  /api/states/{id}:
+    parameters: 
+    - name: id
+      in: path 
+      schema:
+        type: integer
+      required: true 
+    get:
+      summary: Recupera uma entidade pelo ID
+      description: "Atravez desse endpoint voce pode trazer a entidade pelo ID escolhido"
+      responses:
+        200:
+          description: Sucesso
+          content: 
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Estado"
+        404:
+          description: Estado não encontrado
+          content:
+            application/json:
+              example: "Not Found"
+              
+    put:
+      summary: Altera um estado existente pelo ID
+      description: "Através desse endpoint você pode atualizar os estados pelo ID selecionado"
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:   
+                  type: string
+                regiao:   
+                  type: string
+                populacao:   
+                  type: integer
+                capital:   
+                  type: string
+                area:   
+                  type: number  
+      responses:
+        201:
+          description: "Sucesso"
+          content:
+           application/json:
+            schema:
+              $ref: "#/components/schemas/Estado"
+        404:
+          description: Estado não encontrado
+          content:
+            application/json:
+              example: "Not Found"
+
+    delete:
+      summary: Remove um estado pelo ID
+      description: "Atravez desse endpoint voce pode deletar um estado apenas passando o ID"
+      responses:
+        200:
+          description: Sucesso
+          content: 
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Estado"
+        404:
+          description: Estado não encontrado
+          content:
+            application/json:
+              example: "Not Found"
+components:
+  schemas:
+    Estado:
+     type: object
+     properties:
+      id: 
+        type: integer
+      nome:   
+        type: string
+      regiao:   
+        type: string
+      populacao:   
+        type: integer
+      capital:   
+        type: string
+      area:   
+        type: number  
+    Estados: 
+      type: array
+      items:
+        $ref: "#/components/schemas/Estado"

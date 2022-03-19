@@ -28,14 +28,14 @@ public class EstadosController {
     private EstadosRepository estadoRepository;
 
     @GetMapping // mesma url porem agora com metodo Get
-    public Page<EstadoDto> lista(@RequestParam(required = false) StatusEstado regiao, @PageableDefault(sort="id", direction = Sort.Direction.ASC, page = 0, size = 10) Pageable paginacao){
+    public List<EstadoDto> lista(@RequestParam(required = false) StatusEstado regiao, @PageableDefault(sort="id", direction = Sort.Direction.ASC) Pageable paginacao){
                                                                                 //@PageableDefault serve para indicar o padrão de paginação/ordenação ao Spring, quando o cliente da API não enviar tais informações
         if (regiao == null) {
             Page<Estado> estados = estadoRepository.findAll(paginacao);
-            return EstadoDto.converter(estados);
+            return EstadoDto.converter(estados).getContent();
         }else {
             Page<Estado> estados = estadoRepository.findByRegiao(regiao, paginacao);
-            return EstadoDto.converter(estados);
+            return EstadoDto.converter(estados).getContent();
         }
 
     }

@@ -74,6 +74,9 @@ public class AtualizacaoEstadoForm {
 
         return estado;
     }
+    public Estado converter(EstadosRepository estadoRepository) {
+        return new Estado(nome, regiao, populacao, capital, area);
+    }
 
 
 }

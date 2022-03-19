@@ -42,12 +42,13 @@ public class EstadosController {
 
     @PostMapping // mesma url porem agora com metodo Post
     @Transactional // se não fizer o @Transactional ele não atualiza o commit no banco de dados
-    public ResponseEntity<Estado> cadastrar(@RequestBody @Valid Estado estado, UriComponentsBuilder uriBuilder){ // RequestBody indica ao String que os parâmetros enviados no corpo da requisição devem ser atribuidos ao parâmetro do método
+    public ResponseEntity<EstadoDto> cadastrar(@RequestBody @Valid AtualizacaoEstadoForm form, UriComponentsBuilder uriBuilder){ // RequestBody indica ao String que os parâmetros enviados no corpo da requisição devem ser atribuidos ao parâmetro do método
 
+        Estado estado = form.converter(estadoRepository);
         estadoRepository.save(estado);
 
         URI uri = uriBuilder.path("/api/states").buildAndExpand(estado.getId()).toUri();
-        return ResponseEntity.created(uri).body(estado);
+        return ResponseEntity.created(uri).body( new EstadoDto(estado));
     }
 
     @GetMapping("/{id}")

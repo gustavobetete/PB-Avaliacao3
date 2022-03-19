@@ -40,10 +40,21 @@ paths:
            application/json:
             schema:
               $ref: "#/components/schemas/Estado"
+        400:
+          description: não deve estar vazio
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    campo:
+                      type: string
+                    erro:
+                      type: string
             
     get: 
       summary: Recupera todos os estados 
-      description: "Atravez desse endpoint voce pode trazer todos os estados ja setados"
       responses:
         200:
           description: Sucesso
@@ -62,7 +73,6 @@ paths:
       required: true 
     get:
       summary: Recupera uma entidade pelo ID
-      description: "Atravez desse endpoint voce pode trazer a entidade pelo ID escolhido"
       responses:
         200:
           description: Sucesso
@@ -78,7 +88,7 @@ paths:
               
     put:
       summary: Altera um estado existente pelo ID
-      description: "Através desse endpoint você pode atualizar os estados pelo ID selecionado"
+      description: "Através desse endpoint você pode atualizar os estados"
       requestBody: 
         content:
           application/json:
@@ -102,6 +112,18 @@ paths:
            application/json:
             schema:
               $ref: "#/components/schemas/Estado"
+        400:
+          description: Bad Request
+          content:
+           application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    campo:
+                      type: string
+                    erro:
+                      type: string   
         404:
           description: Estado não encontrado
           content:
@@ -110,7 +132,6 @@ paths:
 
     delete:
       summary: Remove um estado pelo ID
-      description: "Atravez desse endpoint voce pode deletar um estado apenas passando o ID"
       responses:
         200:
           description: Sucesso
@@ -119,7 +140,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Estado"
         404:
-          description: Estado não encontrado
+          description: Id não encontrado
           content:
             application/json:
               example: "Not Found"
